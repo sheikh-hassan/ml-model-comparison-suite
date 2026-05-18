@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2 - ML Algorithms Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>🔄 Assignment 2: ML Algorithms Comparison</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/comparison">Comparison</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h2>Compare Machine Learning Algorithms</h2>
+            <p>Comprehensive comparison of KNN, Decision Tree, and Naïve Bayes on both tabular and image data</p>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="card">
+                    <h3>🤖 Algorithms</h3>
+                    <ul>
+                        <li><strong>K-Nearest Neighbors (KNN)</strong> - Instance-based learning</li>
+                        <li><strong>Decision Tree</strong> - Tree-based classification</li>
+                        <li><strong>Naïve Bayes</strong> - Probabilistic classification</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Datasets</h3>
+                    <ul>
+                        <li><strong>CSV Data:</strong> Titanic (Binary Classification)</li>
+                        <li><strong>Image Data:</strong> MNIST (Multi-class Classification)</li>
+                        <li><strong>Metrics:</strong> Accuracy, Precision, Recall, F1, ROC-AUC</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card">
+                    <h3>📈 Key Features</h3>
+                    <ul>
+                        <li>Cross-dataset comparison</li>
+                        <li>All-algorithm predictions</li>
+                        <li>Detailed metrics for each algorithm</li>
+                        <li>Confusion matrices</li>
+                        <li>ROC-AUC curves</li>
+                        <li>Interactive dashboard</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 Evaluation Metrics</h3>
+                    <ul>
+                        <li><strong>Accuracy:</strong> Overall correctness</li>
+                        <li><strong>Precision:</strong> True positive rate</li>
+                        <li><strong>Recall:</strong> Detection rate</li>
+                        <li><strong>F1-Score:</strong> Harmonic mean</li>
+                        <li><strong>ROC-AUC:</strong> Classification quality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="assignment-info">
+                <h3>📝 Assignment Requirements</h3>
+                <div class="checklist">
+                    <label><input type="checkbox" checked disabled> K-Nearest Neighbors on CSV data</label>
+                    <label><input type="checkbox" checked disabled> K-Nearest Neighbors on image data</label>
+                    <label><input type="checkbox" checked disabled> Decision Tree on CSV data</label>
+                    <label><input type="checkbox" checked disabled> Decision Tree on image data</label>
+                    <label><input type="checkbox" checked disabled> Naïve Bayes on CSV data</label>
+                    <label><input type="checkbox" checked disabled> Naïve Bayes on image data</label>
+                    <label><input type="checkbox" checked disabled> Comparative analysis with all metrics</label>
+                    <label><input type="checkbox" checked disabled> Flask application interface</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📚 Algorithm Details</h3>
+                <table class="algorithm-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Type</th>
+                            <th>Best For</th>
+                            <th>Parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>KNN</strong></td>
+                            <td>Instance-based</td>
+                            <td>Non-linear patterns</td>
+                            <td>k=5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Decision Tree</strong></td>
+                            <td>Tree-based</td>
+                            <td>Interpretability</td>
+                            <td>max_depth=10</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Naïve Bayes</strong></td>
+                            <td>Probabilistic</td>
+                            <td>Text classification</td>
+                            <td>Gaussian variant</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Assignment 2 - ML Algorithms Comparison | ML Course</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

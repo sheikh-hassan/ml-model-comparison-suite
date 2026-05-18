@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Assignment 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>📊 Assignment 2 Dashboard</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/comparison">Comparison</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="dashboard">
+            <h2>Algorithm Comparison Metrics</h2>
+            
+            <!-- CSV Metrics -->
+            <div class="dataset-section">
+                <h3>📋 CSV Dataset (Titanic)</h3>
+                <div class="metrics-grid">
+                    <div class="algo-card" id="csv-knn-card">
+                        <h4>KNN</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="csv-knn-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="csv-knn-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="csv-knn-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="csv-knn-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="csv-knn-roc">-</span>
+                        </div>
+                    </div>
+
+                    <div class="algo-card" id="csv-dt-card">
+                        <h4>Decision Tree</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="csv-dt-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="csv-dt-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="csv-dt-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="csv-dt-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="csv-dt-roc">-</span>
+                        </div>
+                    </div>
+
+                    <div class="algo-card" id="csv-nb-card">
+                        <h4>Naïve Bayes</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="csv-nb-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="csv-nb-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="csv-nb-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="csv-nb-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="csv-nb-roc">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MNIST Metrics -->
+            <div class="dataset-section">
+                <h3>🖼️ MNIST Dataset (Digits)</h3>
+                <div class="metrics-grid">
+                    <div class="algo-card" id="mnist-knn-card">
+                        <h4>KNN</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="mnist-knn-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="mnist-knn-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="mnist-knn-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="mnist-knn-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="mnist-knn-roc">-</span>
+                        </div>
+                    </div>
+
+                    <div class="algo-card" id="mnist-dt-card">
+                        <h4>Decision Tree</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="mnist-dt-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="mnist-dt-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="mnist-dt-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="mnist-dt-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="mnist-dt-roc">-</span>
+                        </div>
+                    </div>
+
+                    <div class="algo-card" id="mnist-nb-card">
+                        <h4>Naïve Bayes</h4>
+                        <div class="metric">
+                            <span>Accuracy:</span>
+                            <span id="mnist-nb-acc">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Precision:</span>
+                            <span id="mnist-nb-prec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>Recall:</span>
+                            <span id="mnist-nb-rec">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>F1-Score:</span>
+                            <span id="mnist-nb-f1">-</span>
+                        </div>
+                        <div class="metric">
+                            <span>ROC-AUC:</span>
+                            <span id="mnist-nb-roc">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Tables -->
+            <div class="row">
+                <div class="card">
+                        <div class="upload-section">
+                            <div class="section-header">
+                                <h3>⚡ Upload & Predict</h3>
+                                <p>Upload a CSV row or image and compare a chosen algorithm directly from the dashboard.</p>
+                            </div>
+
+                            <div class="upload-grid">
+                                <div class="upload-card">
+                                    <h4>CSV File Prediction</h4>
+                                    <p class="upload-note">Titanic columns required: Pclass, Age, SibSp, Parch, Fare.</p>
+                                    <label for="csv-algorithm-select">Algorithm</label>
+                                    <select id="csv-algorithm-select" class="file-input">
+                                        <option>KNN</option>
+                                        <option>Decision Tree</option>
+                                        <option>Naïve Bayes</option>
+                                    </select>
+                                    <input type="file" id="csv-file-input" class="file-input" accept=".csv,text/csv">
+                                    <button type="button" class="btn btn-primary" id="csv-file-btn">Predict CSV File</button>
+                                    <div id="csv-file-result" class="result-box"></div>
+                                </div>
+
+                                <div class="upload-card">
+                                    <h4>MNIST Image Prediction</h4>
+                                    <p class="upload-note">Upload a digit image and choose an algorithm.</p>
+                                    <label for="mnist-algorithm-select">Algorithm</label>
+                                    <select id="mnist-algorithm-select" class="file-input">
+                                        <option>KNN</option>
+                                        <option>Decision Tree</option>
+                                        <option>Naïve Bayes</option>
+                                    </select>
+                                    <input type="file" id="mnist-file-input" class="file-input" accept="image/*">
+                                    <button type="button" class="btn btn-primary" id="mnist-file-btn">Predict Image</button>
+                                    <div id="mnist-file-result" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <h3>📊 CSV Dataset Comparison Table</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Accuracy</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>ROC-AUC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="csv-comparison-tbody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>📊 MNIST Dataset Comparison Table</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Accuracy</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>ROC-AUC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mnist-comparison-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row">
+                <div class="card" style="grid-column: 1 / -1;">
+                    <div id="accuracy-chart"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card">
+                    <div id="csv-chart"></div>
+                </div>
+                <div class="card">
+                    <div id="mnist-chart"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Assignment 2 - ML Algorithms Comparison | ML Course</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        const algorithms = ['KNN', 'Decision Tree', 'Naïve Bayes'];
+        const algoIdMap = {
+            'KNN': 'knn',
+            'Decision Tree': 'dt',
+            'Naïve Bayes': 'nb'
+        };
+
+        function getAlgorithmMetrics(algorithmMap, algorithmName) {
+            if (algorithmMap[algorithmName]) {
+                return algorithmMap[algorithmName];
+            }
+
+            if (algorithmName.includes('Bayes')) {
+                const bayesKey = Object.keys(algorithmMap).find(key => key.toLowerCase().includes('bayes'));
+                return bayesKey ? algorithmMap[bayesKey] : null;
+            }
+
+            return null;
+        }
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                if (!data || !data.csv || !data.mnist || !data.csv.algorithms || !data.mnist.algorithms) {
+                    console.warn('Comparison stats are not available in the expected format:', data);
+                    return;
+                }
+                
+                // CSV Metrics
+                algorithms.forEach(algo => {
+                    const metrics = getAlgorithmMetrics(data.csv.algorithms, algo);
+                    if (!metrics) return;
+
+                    document.getElementById(`csv-${algoIdMap[algo]}-acc`).textContent = 
+                        (metrics.accuracy * 100).toFixed(2) + '%';
+                    document.getElementById(`csv-${algoIdMap[algo]}-prec`).textContent = 
+                        metrics.precision.toFixed(4);
+                    document.getElementById(`csv-${algoIdMap[algo]}-rec`).textContent = 
+                        metrics.recall.toFixed(4);
+                    document.getElementById(`csv-${algoIdMap[algo]}-f1`).textContent = 
+                        metrics.f1_score.toFixed(4);
+                    document.getElementById(`csv-${algoIdMap[algo]}-roc`).textContent = 
+                        metrics.roc_auc.toFixed(4);
+                });
+                
+                // MNIST Metrics
+                algorithms.forEach(algo => {
+                    const metrics = getAlgorithmMetrics(data.mnist.algorithms, algo);
+                    if (!metrics) return;
+
+                    document.getElementById(`mnist-${algoIdMap[algo]}-acc`).textContent = 
+                        (metrics.accuracy * 100).toFixed(2) + '%';
+                    document.getElementById(`mnist-${algoIdMap[algo]}-prec`).textContent = 
+                        metrics.precision.toFixed(4);
+                    document.getElementById(`mnist-${algoIdMap[algo]}-rec`).textContent = 
+                        metrics.recall.toFixed(4);
+                    document.getElementById(`mnist-${algoIdMap[algo]}-f1`).textContent = 
+                        metrics.f1_score.toFixed(4);
+                    document.getElementById(`mnist-${algoIdMap[algo]}-roc`).textContent = 
+                        metrics.roc_auc.toFixed(4);
+                });
+                
+                // Populate tables
+                populateTables(data);
+                
+                // Plot charts
+                plotCharts(data);
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        function populateTables(data) {
+            // CSV Table
+            const csvBody = document.getElementById('csv-comparison-tbody');
+            csvBody.innerHTML = '';
+            algorithms.forEach(algo => {
+                const metrics = getAlgorithmMetrics(data.csv.algorithms, algo);
+                if (!metrics) return;
+                const row = `<tr>
+                    <td><strong>${algo}</strong></td>
+                    <td>${(metrics.accuracy * 100).toFixed(2)}%</td>
+                    <td>${metrics.precision.toFixed(4)}</td>
+                    <td>${metrics.recall.toFixed(4)}</td>
+                    <td>${metrics.f1_score.toFixed(4)}</td>
+                    <td>${metrics.roc_auc.toFixed(4)}</td>
+                </tr>`;
+                csvBody.innerHTML += row;
+            });
+            
+            // MNIST Table
+            const mnistBody = document.getElementById('mnist-comparison-tbody');
+            mnistBody.innerHTML = '';
+            algorithms.forEach(algo => {
+                const metrics = getAlgorithmMetrics(data.mnist.algorithms, algo);
+                if (!metrics) return;
+                const row = `<tr>
+                    <td><strong>${algo}</strong></td>
+                    <td>${(metrics.accuracy * 100).toFixed(2)}%</td>
+                    <td>${metrics.precision.toFixed(4)}</td>
+                    <td>${metrics.recall.toFixed(4)}</td>
+                    <td>${metrics.f1_score.toFixed(4)}</td>
+                    <td>${metrics.roc_auc.toFixed(4)}</td>
+                </tr>`;
+                mnistBody.innerHTML += row;
+            });
+        }
+        
+        function plotCharts(data) {
+            // Accuracy comparison
+            const accuracyTrace1 = {
+                x: algorithms,
+                y: algorithms.map(algo => (getAlgorithmMetrics(data.csv.algorithms, algo) || { accuracy: 0 }).accuracy),
+                name: 'CSV',
+                type: 'bar'
+            };
+            
+            const accuracyTrace2 = {
+                x: algorithms,
+                y: algorithms.map(algo => (getAlgorithmMetrics(data.mnist.algorithms, algo) || { accuracy: 0 }).accuracy),
+                name: 'MNIST',
+                type: 'bar'
+            };
+            
+            Plotly.newPlot('accuracy-chart', [accuracyTrace1, accuracyTrace2], {
+                title: 'Accuracy Comparison Across Datasets',
+                barmode: 'group',
+                yaxis: { title: 'Accuracy' }
+            });
+            
+            // CSV Radar
+            const csvMetrics = ['accuracy', 'precision', 'recall', 'f1_score'];
+            const csvTrace = {
+                r: csvMetrics.map(m => data.csv.algorithms['KNN'][m]),
+                theta: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                type: 'scatterpolar',
+                fill: 'toself',
+                name: 'KNN'
+            };
+            
+            Plotly.newPlot('csv-chart', [csvTrace], {
+                title: 'CSV Dataset - Algorithm Comparison',
+                polar: { radialaxis: { visible: true, range: [0, 1] } }
+            });
+            
+            // MNIST Radar
+            const mnistTrace = {
+                r: csvMetrics.map(m => data.mnist.algorithms['KNN'][m]),
+                theta: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                type: 'scatterpolar',
+                fill: 'toself',
+                name: 'KNN'
+            };
+            
+            Plotly.newPlot('mnist-chart', [mnistTrace], {
+                title: 'MNIST Dataset - Algorithm Comparison',
+                polar: { radialaxis: { visible: true, range: [0, 1] } }
+            });
+        }
+        
+        loadStats();
+    </script>
+</body>
+</html>

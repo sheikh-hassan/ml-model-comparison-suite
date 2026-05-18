@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Comparison - Assignment 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>📊 Detailed Algorithm Comparison</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/comparison">Comparison</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="dashboard">
+            <h2>In-Depth Algorithm Analysis</h2>
+            
+            <div class="row">
+                <div class="card">
+                    <h3>🎯 Best Performers</h3>
+                    <div id="best-performers"></div>
+                </div>
+
+                <div class="card">
+                    <h3>📈 Metrics Distribution</h3>
+                    <div id="metrics-dist"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card" style="grid-column: 1 / -1;">
+                    <h3>📊 Algorithm Ranking by Metric</h3>
+                    <div id="ranking-chart"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card">
+                    <h3>🔍 CSV Dataset Analysis</h3>
+                    <div id="csv-analysis"></div>
+                </div>
+
+                <div class="card">
+                    <h3>🔍 MNIST Dataset Analysis</h3>
+                    <div id="mnist-analysis"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📋 Algorithm Recommendations</h3>
+                <div id="recommendations"></div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Assignment 2 - ML Algorithms Comparison | ML Course</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        async function loadComparisonData() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                generateBestPerformers(data);
+                generateAnalysis(data);
+                generateRecommendations(data);
+                
+            } catch (error) {
+                console.error('Error loading comparison data:', error);
+            }
+        }
+        
+        function generateBestPerformers(data) {
+            const div = document.getElementById('best-performers');
+            
+            let html = '<table class="comparison-table"><thead><tr><th>Metric</th><th>CSV Best</th><th>MNIST Best</th></tr></thead><tbody>';
+            
+            const metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc'];
+            const algorithms = ['KNN', 'Decision Tree', 'Naïve Bayes'];
+            
+            metrics.forEach(metric => {
+                let csvBest = { algo: '', value: 0 };
+                let mnistBest = { algo: '', value: 0 };
+                
+                algorithms.forEach(algo => {
+                    const csvVal = data.csv.algorithms[algo][metric];
+                    const mnistVal = data.mnist.algorithms[algo][metric];
+                    
+                    if (csvVal > csvBest.value) {
+                        csvBest = { algo: algo, value: csvVal };
+                    }
+                    if (mnistVal > mnistBest.value) {
+                        mnistBest = { algo: algo, value: mnistVal };
+                    }
+                });
+                
+                html += `<tr>
+                    <td><strong>${metric.replace('_', ' ').toUpperCase()}</strong></td>
+                    <td>${csvBest.algo} (${csvBest.value.toFixed(4)})</td>
+                    <td>${mnistBest.algo} (${mnistBest.value.toFixed(4)})</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            div.innerHTML = html;
+        }
+        
+        function generateAnalysis(data) {
+            const algorithms = ['KNN', 'Decision Tree', 'Naïve Bayes'];
+            const metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc'];
+            
+            let csvHtml = '<ul>';
+            algorithms.forEach(algo => {
+                const algoData = data.csv.algorithms[algo];
+                csvHtml += `<li><strong>${algo}</strong>: Avg Score = ${
+                    (metrics.reduce((sum, m) => sum + algoData[m], 0) / metrics.length).toFixed(4)
+                }</li>`;
+            });
+            csvHtml += '</ul>';
+            document.getElementById('csv-analysis').innerHTML = csvHtml;
+            
+            let mnistHtml = '<ul>';
+            algorithms.forEach(algo => {
+                const algoData = data.mnist.algorithms[algo];
+                mnistHtml += `<li><strong>${algo}</strong>: Avg Score = ${
+                    (metrics.reduce((sum, m) => sum + algoData[m], 0) / metrics.length).toFixed(4)
+                }</li>`;
+            });
+            mnistHtml += '</ul>';
+            document.getElementById('mnist-analysis').innerHTML = mnistHtml;
+        }
+        
+        function generateRecommendations(data) {
+            const div = document.getElementById('recommendations');
+            
+            let html = '<ul class="recommendations">';
+            html += '<li><strong>For CSV (Tabular) Data:</strong> ';
+            
+            let csvBestAcc = { algo: '', value: 0 };
+            ['KNN', 'Decision Tree', 'Naïve Bayes'].forEach(algo => {
+                if (data.csv.algorithms[algo].accuracy > csvBestAcc.value) {
+                    csvBestAcc = { algo: algo, value: data.csv.algorithms[algo].accuracy };
+                }
+            });
+            html += `Use <strong>${csvBestAcc.algo}</strong> for best accuracy (${(csvBestAcc.value * 100).toFixed(2)}%)</li>`;
+            
+            html += '<li><strong>For MNIST (Image) Data:</strong> ';
+            let mnistBestAcc = { algo: '', value: 0 };
+            ['KNN', 'Decision Tree', 'Naïve Bayes'].forEach(algo => {
+                if (data.mnist.algorithms[algo].accuracy > mnistBestAcc.value) {
+                    mnistBestAcc = { algo: algo, value: data.mnist.algorithms[algo].accuracy };
+                }
+            });
+            html += `Use <strong>${mnistBestAcc.algo}</strong> for best accuracy (${(mnistBestAcc.value * 100).toFixed(2)}%)</li>`;
+            
+            html += '<li><strong>KNN</strong>: Best for non-linear patterns, slower prediction time</li>';
+            html += '<li><strong>Decision Tree</strong>: Most interpretable, prone to overfitting</li>';
+            html += '<li><strong>Naïve Bayes</strong>: Fast training/prediction, assumes feature independence</li>';
+            html += '</ul>';
+            
+            div.innerHTML = html;
+        }
+        
+        loadComparisonData();
+    </script>
+</body>
+</html>
